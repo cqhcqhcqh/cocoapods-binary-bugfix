@@ -1,18 +1,19 @@
 {
   "configurations": [
-
     {
-    "name": "Debug CocoaPods Binary",
+    "name": "Debug Podfile Project",
     "showDebuggerOutput": true,
     "type": "Ruby",
     "request": "launch",
+    /// useBundler 为 true 的意思是使用 bundle 来配置依赖的可执行程序
     "useBundler": true,
-    "cwd": "${workspaceRoot}/Test_VSMaterial_bundle", // pod 命令执行的路径
+    "cwd": "${workspaceRoot}",
+    /// 指定执行可执行文件/或者源代码文件的路径
     "program": "/usr/local/bin/pod",
-    // "args": ["update", "--verbose","--sources=http://gitlab.9tong.com/ios-group/HQPFoundation/hqpspecs.git"], // `pod` 命令的参数
-    "args": ["install", "--verbose"]
+    /// 如果在 ${workspaceRoot} 中有一个可调式项目就不需要指定 --project-directory 直接 cwd 进入到文件夹下
+    /// 如果想调试别的项目需要指定 --project-directory，不能 cwd --project-directory 对应的path
+    "args": ["install", "--project-directory=~/Workspaces/VSTimeLine/VSTimeLine", "--verbose"]
     // "args": ["install","--hsource"]
-    // "args":["install", "--help"]
     }
   ]
 }
