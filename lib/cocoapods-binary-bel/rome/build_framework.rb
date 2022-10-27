@@ -45,20 +45,32 @@ def build_for_iosish_platform(sandbox,
 
   device_binary = device_framework_path + "/#{module_name}"
   simulator_binary = simulator_framework_path + "/#{module_name}"
-  return unless File.file?(device_binary) && File.file?(simulator_binary)
-  
+  # if device_binary exist && simulator_binary exist 继续执行下面的代码
+  # else return
+  return unless File.file?(device_binary) || File.file?(simulator_binary)
+
   # the device_lib path is the final output file path
   # combine the binaries
   tmp_lipoed_binary_path = "#{build_dir}/#{target_name}"
-  lipo_log = `lipo -create -output #{tmp_lipoed_binary_path} #{device_binary} #{simulator_binary}`
+  if File.file?(device_binary) && File.file?(simulator_binary)
+    lipo_log = `lipo -create -output #{tmp_lipoed_binary_path} #{device_binary} #{simulator_binary}`
+  elsif File.file?(device_binary)
+    lipo_log = `lipo -create -output #{tmp_lipoed_binary_path} #{device_binary}`
+  else
+    lipo_log = `lipo -create -output #{tmp_lipoed_binary_path} #{simulator_binary}`
+  end
   puts lipo_log unless File.exist?(tmp_lipoed_binary_path)
   FileUtils.mv tmp_lipoed_binary_path, device_binary, :force => true
   
   # collect the swiftmodule file for various archs.
   device_swiftmodule_path = device_framework_path + "/Modules/#{module_name}.swiftmodule"
   simulator_swiftmodule_path = simulator_framework_path + "/Modules/#{module_name}.swiftmodule"
-  if File.exist?(device_swiftmodule_path)
+  if File.exist?(simulator_swiftmodule_path) and not File.exist?(device_swiftmodule_path)
     FileUtils.cp_r simulator_swiftmodule_path + "/.", device_swiftmodule_path
+  end
+
+  if File.exist?(device_swiftmodule_path) and not File.exist?(simulator_swiftmodule_path)
+    FileUtils.cp_r device_swiftmodule_path + "/.", simulator_swiftmodule_path
   end
 
   # combine the generated swift headers
@@ -66,11 +78,19 @@ def build_for_iosish_platform(sandbox,
   # https://github.com/leavez/cocoapods-binary/issues/58
   simulator_generated_swift_header_path = simulator_framework_path + "/Headers/#{module_name}-Swift.h"
   device_generated_swift_header_path = device_framework_path + "/Headers/#{module_name}-Swift.h"
+  
+  device_header = ""
   if File.exist? simulator_generated_swift_header_path
     device_header = File.read(device_generated_swift_header_path)
-    simulator_header = File.read(simulator_generated_swift_header_path)
-    # https://github.com/Carthage/Carthage/issues/2718#issuecomment-473870461
-    combined_header_content = %Q{
+  end
+
+  simulator_header = ""
+  if File.exist? device_generated_swift_header_path
+    simulator_header = File.read(device_generated_swift_header_path)
+  end
+
+  # https://github.com/Carthage/Carthage/issues/2718#issuecomment-473870461
+  combined_header_content = %Q{
 #if TARGET_OS_SIMULATOR // merged by cocoapods-binary-bel
 
 #{simulator_header}
@@ -81,8 +101,7 @@ def build_for_iosish_platform(sandbox,
 
 #endif // merged by cocoapods-binary-bel
 }
-    File.write(device_generated_swift_header_path, combined_header_content.strip)
-  end
+  File.write(device_generated_swift_header_path, combined_header_content.strip)
 
   # # handle the dSYM files
   # device_dsym = "#{device_framework_path}.dSYM"

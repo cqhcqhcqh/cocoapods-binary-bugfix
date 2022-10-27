@@ -1,12 +1,13 @@
 {
   "configurations": [
+
     {
     "name": "Debug CocoaPods Binary",
     "showDebuggerOutput": true,
     "type": "Ruby",
     "request": "launch",
     "useBundler": true,
-    "cwd": "${workspaceRoot}/demo", // pod 命令执行的路径
+    "cwd": "${workspaceRoot}/Test_VSMaterial_bundle", // pod 命令执行的路径
     "program": "/usr/local/bin/pod",
     // "args": ["update", "--verbose","--sources=http://gitlab.9tong.com/ios-group/HQPFoundation/hqpspecs.git"], // `pod` 命令的参数
     "args": ["install", "--verbose"]
