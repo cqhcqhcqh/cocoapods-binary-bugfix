@@ -1,3 +1,3 @@
-module CocoapodsBinaryBel
-    VERSION = "0.5.4"
+module CocoapodsBinaryBugfix
+    VERSION = "0.0.1"
 end

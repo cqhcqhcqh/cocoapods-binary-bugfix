@@ -6,7 +6,7 @@ if version == nil
 end
 path = "lib/cocoapods-binary-bugfix/gem_version.rb"
 content = <<-eos
-module CocoapodsBinary
+module CocoapodsBinaryBugfix
     VERSION = "#{version}"
 end
 eos
