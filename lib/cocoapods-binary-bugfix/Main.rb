@@ -89,7 +89,7 @@ Pod::HooksManager.register('cocoapods-binary-bugfix', :pre_install) do |installe
         next
     end
 
-    Pod::UI.puts("当前版本:  #{CocoapodsBinaryBel::VERSION}")
+    Pod::UI.puts("当前版本:  #{CocoapodsBinaryBugfix::VERSION}")
     
     # [Check Environment]
     # check user_framework is on
