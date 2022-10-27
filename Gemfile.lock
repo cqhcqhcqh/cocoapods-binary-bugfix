@@ -1,7 +1,7 @@
 PATH
   remote: .
   specs:
-    cocoapods-binary-ct (0.0.1)
+    cocoapods-binary-ct (0.5.4.pre.bugfix)
       CFPropertyList
       cocoapods
       fourflusher

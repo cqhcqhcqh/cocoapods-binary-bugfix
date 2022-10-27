@@ -1,7 +1,7 @@
 
 platform :ios, '9.0'
 
-plugin 'cocoapods-binary-bel'
+plugin 'cocoapods-binary-ct'
 
 
 use_frameworks!
