@@ -1,2 +1,2 @@
-require 'cocoapods-binary-bel/Main'
+require 'cocoapods-binary-bugfix/Main'
 

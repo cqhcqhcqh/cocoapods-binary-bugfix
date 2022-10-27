@@ -204,7 +204,9 @@ module Pod
                     path_objects = resources.map do |path|
                         prebuild_real_path = (path.gsub('${PODS_ROOT}', sandbox.root.to_s) if path.start_with? '${PODS_ROOT}')|| ""
                         real_file_path = framework_path + File.basename(path)
-                        if Pathname.new(prebuild_real_path).exist? and not Pathname.new(real_file_path).exist?
+                        if Pathname.new(prebuild_real_path).exist? and
+                             Pathname.new(framework_path).exist? and 
+                             not Pathname.new(real_file_path).exist?
                             # 静态库的resource,拷贝至framework目录下
                             FileUtils.cp_r(prebuild_real_path, real_file_path, :remove_destination => true)
                         end

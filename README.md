@@ -35,12 +35,12 @@ Then in the flowing normal install process, we hook the integration functions to
 
 ## Installation
 
-sudo gem install cocoapods-binary-bel
+sudo gem install cocoapods-binary-bugfix
 
 ## Usage
 
 ``` ruby
-plugin 'cocoapods-binary-bel'
+plugin 'cocoapods-binary-bugfix'
 
 use_frameworks!
 # all_binary!
@@ -50,7 +50,7 @@ target "HP" do
 end
 ```
 
-- Add `plugin 'cocoapods-binary-bel'` in the head of Podfile 
+- Add `plugin 'cocoapods-binary-bugfix'` in the head of Podfile 
 - Add `:binary => true` as a option of one specific pod, or add `all_binary!` before all targets, which makes all pods binaries.
 - pod install, and that's all
 
@@ -80,6 +80,6 @@ MIT
 
 Appreciate a 🌟 if you like it. 
 
-# cocoapods-binary-bel
+# cocoapods-binary-bugfix
 
 

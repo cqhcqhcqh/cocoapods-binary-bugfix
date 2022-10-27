@@ -1,1 +1,1 @@
-require 'cocoapods-binary-bel/gem_version'
+require 'cocoapods-binary-bugfix/gem_version'
